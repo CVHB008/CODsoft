@@ -1,7 +1,7 @@
 ![Intership image kept in readme in Codsoft repo](https://github.com/user-attachments/assets/ac57b367-e1ec-4bb9-b8a8-007d9befa9c2)
 # Internship Tasks Repository
 
-This repository contains the tasks and projects assigned to me during my internship in python programming at Codsoft.Each task and its 
+This repository contains the tasks and projects assigned to me during my internship in python programming at Codsoft.Each task and its details are given below.
 
 # Table of Contents
 Introduction
