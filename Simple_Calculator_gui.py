@@ -9,6 +9,7 @@ calc.geometry('320x350')
 symbol = tk.StringVar()
 symbol.set('Select')
 
+
 def evaluate(left_op,symbol,right_op):
     
     if symbol == '+':

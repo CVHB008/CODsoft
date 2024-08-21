@@ -1,7 +1,7 @@
 import random as rand
 import time as tt
 
-#A menu driven Rock Paper Scisor game
+#A menu driven Rock Paper Scissor game
 
 player_score = 0
 computer_score = 0
@@ -76,6 +76,8 @@ def run():
         print('INVALID INPUT')
         tt.sleep(0.1)
         menu()
+
+
 def menu():
     print('\nMenu\n1.Game Rules\n2.Play Game\n3.Quit Game\n4.Display score board')
     option = int(input('Enter the option : '))
@@ -107,7 +109,6 @@ def menu():
             print('THANKYOU FOR PLAYING, COME AGAIN')
             tt.sleep(5)
         
-        
     elif option == 4:
         tt.sleep(0.1)
         print(f'\nScore Board :\nYour score : {player_score}\nComputer Score : {computer_score}')
@@ -117,7 +118,5 @@ def menu():
         print('Enter a valid option please')
         tt.sleep(0.1)
         menu()
-        
+
 menu()
-
-

@@ -13,7 +13,7 @@ class ToDoList:
         self.root = root
         self.root.title('To Do List')
         self.root.geometry('515x582')
-        self.root.resizable(False,False)
+        self.root.resizable(False, False)
         self.root.config(bg=None)
         self.database()
         self.tasks_id_incomp = []
@@ -32,7 +32,6 @@ class ToDoList:
         cur = conn.cursor()
         cur.execute(query)
         conn.commit()
-
 
     def setup_ui(self):
 
@@ -56,7 +55,8 @@ class ToDoList:
         self.scrollyincomp = tk.Scrollbar(self.frame_list_incomp)
         self.scrollyincomp.pack(side = 'right',fill = 'both')
         
-        self.listbox_incomplete = tk.Listbox(self.frame_list_incomp,height = 8,width = 25,font = ('ariel',12),yscrollcommand = self.scrollyincomp.set)
+        self.listbox_incomplete = tk.Listbox(self.frame_list_incomp,height = 8,width = 25,font = ('ariel',12),
+                                             yscrollcommand = self.scrollyincomp.set)
         self.listbox_incomplete.pack()
 
         self.scrollyincomp.config(command = self.listbox_incomplete.yview)
@@ -68,7 +68,8 @@ class ToDoList:
         self.scrollypend = tk.Scrollbar(self.frame_list_pend)
         self.scrollypend.pack(side = 'right',fill = 'both')
         
-        self.listbox_pending = tk.Listbox(self.frame_list_pend,height = 8,width = 25,font = ('ariel',12),yscrollcommand = self.scrollypend.set)
+        self.listbox_pending = tk.Listbox(self.frame_list_pend,height = 8,width = 25,font = ('ariel',12),
+                                          yscrollcommand=self.scrollypend.set)
         self.listbox_pending.pack()
 
         self.scrollypend.config(command = self.listbox_pending.yview)
@@ -80,7 +81,8 @@ class ToDoList:
         self.scrollycomp = tk.Scrollbar(self.frame_list_comp)
         self.scrollycomp.pack(side = 'right',fill = 'both')
         
-        self.listbox_completed = tk.Listbox(self.frame_list_comp,height = 8,width = 52,font = ('ariel',12),yscrollcommand = self.scrollycomp.set)
+        self.listbox_completed = tk.Listbox(self.frame_list_comp,height = 8,width = 52,font = ('ariel',12),
+                                            yscrollcommand = self.scrollycomp.set)
         self.listbox_completed.pack()
 
         self.scrollycomp.config(command = self.listbox_completed.yview)
