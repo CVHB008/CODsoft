@@ -46,8 +46,8 @@ def add_person(self):
 
     else:
         # put input fields into tuple
-        insert_row = (self.first_entry.get(), self.last_entry.get(), self.phone_entry.get(),
-                      self.email_entry.get(), self.address_entry.get())
+        insert_row = (self.first_entry.get(), self.last_entry.get(), self.email_entry.get(),
+                      self.phone_entry.get(), self.address_entry.get())
         conn = db_conn()
         with conn:
             cur = conn.cursor()
@@ -120,7 +120,6 @@ def edit_person(self):
         query = '''UPDATE Contact_book SET f_name = ?, l_name=?, phone=?, email=?, address=? WHERE oid = ?'''
         cur.execute(query, update)
         conn.commit()
-        conn.close()
     load_contactlist(self)
     clear_form_fields(self)
 
