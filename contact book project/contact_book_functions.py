@@ -1,6 +1,5 @@
 # functions defined in one module
 import sqlite3 as sq
-import contact_book_ui as cbui
 from tkinter import messagebox as mb
 
 
@@ -104,6 +103,7 @@ def select_entry(self):
         self.phone_entry.insert(0, phone)
         self.email_entry.insert(0, email)
         self.address_entry.insert(0, address)
+
     except:
         load_contactlist(self)
         set_action_buttons(self, False)
