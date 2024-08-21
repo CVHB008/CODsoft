@@ -80,7 +80,11 @@ def run():
 
 def menu():
     print('\nMenu\n1.Game Rules\n2.Play Game\n3.Quit Game\n4.Display score board')
-    option = int(input('Enter the option : '))
+    try:
+        option = int(input('Enter the option : '))
+
+    except ValueError:
+        menu()
 
     if option == 1:
         print(rules)
