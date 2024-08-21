@@ -69,9 +69,3 @@ def load_gui(self, root):
         self.contact_list.pack()
         self.sb.config(command=self.contact_list.yview)
         self.contact_list.bind('<<ListboxSelect>>', lambda event: cbf.select_entry(self))
-
-
-
-        
-        
-
