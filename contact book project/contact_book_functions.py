@@ -2,11 +2,9 @@
 import sqlite3 as sq
 from tkinter import messagebox as mb
 
-
 def db_conn():
     conn = sq.connect('Contactbook.db')
     return conn
-
 
 def removeisosurface(self):
     self.button_add.place_forget()

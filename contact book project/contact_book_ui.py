@@ -1,6 +1,5 @@
 import tkinter as tk
 import contact_book_functions as cbf
-from tkinter import messagebox as mb
 
 
 def load_gui(self, root):
