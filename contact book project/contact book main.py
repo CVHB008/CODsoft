@@ -7,11 +7,9 @@ class contact_book:
     def __init__(self):
         self.contacts_id = []
         self.root = root
-        print('initialization success')
         cbui.load_gui(self, self.root)
         func.create_table()
         func.load_contactlist(self)
-        print(self.contacts_id)
 
 
 root = tk.Tk()
