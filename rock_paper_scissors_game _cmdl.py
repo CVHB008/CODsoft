@@ -2,6 +2,7 @@ import random as rand
 import time as tt
 
 #A menu driven Rock Paper Scissor game
+error = False
 
 player_score = 0
 computer_score = 0
@@ -9,9 +10,9 @@ computer_score = 0
 rules ='\nRules:\n1.First choose an option of your wish.\
 \n2.Second the computer will choose its option.\
 \n3.Based on both the choices the Winner will be selected and both\n\
-of your scores will be kept in track and will be displayed in the end of every game.'
+of your scores will be kept in track and will be displayed in the end of every game.\n'
 
-print('Welcome to the game => Rock Paper Scissors\n"Note : This is a 5 on 5 \
+print('\n', 8 * '\t', 'Welcome To The Game ==> Rock Paper Scissors\n"Note : This is a 5 on 5 \
 round and after completing 5 rounds you can choose to continue playing or quit"')
 print()
 
@@ -27,8 +28,9 @@ def get_choices():
 def who_is_winner(player,computer):
     global player_score
     global computer_score
-    
-    print(f'You chose : {player}\nComputer chose : {computer}')
+    global error
+    if player.lower() in ['rock', 'paper', 'scissor']:
+        print(f'You chose : {player}\nComputer chose : {computer}')
     if computer == player:
         player_score += 1
         computer_score += 1
@@ -59,15 +61,25 @@ def who_is_winner(player,computer):
             return 'Scissor cuts the Paper, You win the game'
             
     else:
+        error = True
         return "'INVALID Input'\nPlease Try Again"
 
 def run():
-    for i in range(5):
+    global error
+
+    n = 1
+    while n <= 5:
         choices = get_choices()
-        result = who_is_winner(choices['player'],choices['computer'])
+        result = who_is_winner(choices['player'], choices['computer'])
         print(result)
         tt.sleep(0.1)
+        if not error:
+            n += 1
+        else:
+            error = False
+
     play = input('\nDo you want to play again(Y/N) : ')
+    print()
     if play.upper() == 'Y':
         run()
     elif play.upper() == 'N':
@@ -79,7 +91,7 @@ def run():
 
 
 def menu():
-    print('\nMenu\n1.Game Rules\n2.Play Game\n3.Quit Game\n4.Display score board')
+    print('Menu\n1.Game Rules\n2.Play Game\n3.Quit Game\n4.Display score board')
     try:
         option = int(input('Enter the option : '))
 
@@ -115,7 +127,7 @@ def menu():
         
     elif option == 4:
         tt.sleep(0.1)
-        print(f'\nScore Board :\nYour score : {player_score}\nComputer Score : {computer_score}')
+        print(f'\nScore Board :\nYour score : {player_score}\nComputer Score : {computer_score}\n')
         menu()
         
     else:

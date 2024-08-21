@@ -79,6 +79,7 @@ def load_contactlist(self):
 
 
 def select_entry(self):
+    oid = None
     contact = self.contact_list.get('anchor', )
 
     self.first_entry.delete(0, 'end')
@@ -90,18 +91,22 @@ def select_entry(self):
 
     conn = db_conn()
     cur = conn.cursor()
-    index = (int(contact.split('.')[0]) - 1)
-    oid = self.contacts_id[index][1]
-    cur.execute('''SELECT f_name, l_name, email, phone, address FROM Contact_book WHERE oid = ?''', (oid,))
-    data = cur.fetchone()
+    try:
+        index = (int(contact.split('.')[0]) - 1)
+        oid = self.contacts_id[index][1]
+        cur.execute('''SELECT f_name, l_name, email, phone, address FROM Contact_book WHERE oid = ?''', (oid,))
+        data = cur.fetchone()
 
-    f_name, l_name, email, phone, address = data
-    self.entry_oid.insert(0, oid)
-    self.first_entry.insert(0, f_name)
-    self.last_entry.insert(0, l_name)
-    self.phone_entry.insert(0, phone)
-    self.email_entry.insert(0, email)
-    self.address_entry.insert(0, address)
+        f_name, l_name, email, phone, address = data
+        self.entry_oid.insert(0, oid)
+        self.first_entry.insert(0, f_name)
+        self.last_entry.insert(0, l_name)
+        self.phone_entry.insert(0, phone)
+        self.email_entry.insert(0, email)
+        self.address_entry.insert(0, address)
+    except:
+        load_contactlist(self)
+        set_action_buttons(self, False)
 
     load_contactlist(self)
     set_action_buttons(self, False)

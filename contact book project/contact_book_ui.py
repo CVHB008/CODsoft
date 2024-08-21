@@ -6,7 +6,7 @@ from tkinter import messagebox as mb
 def load_gui(self, root):
         root.title('Contact Book')
         root.geometry('500x320')
-        fonts = ('Helvetica 11')
+        fonts = 'Helvetica 11'
 
         self.entry_oid = tk.Entry(root)
 
@@ -39,18 +39,22 @@ def load_gui(self, root):
         self.actionframe = tk.LabelFrame(root, relief='flat')
         self.actionframe.place(x=20, y=260)
 
-        self.button_add = tk.Button(self.actionframe, text='Add', font=fonts,padx=5, bg='#dcdcdc', command=lambda: cbf.add_person(self))
+        self.button_add = tk.Button(self.actionframe, text='Add', font=fonts,padx=5, bg='#dcdcdc',
+                                    command=lambda: cbf.add_person(self))
         self.button_add.grid(row=0, column=0)
 
-        self.button_edit = tk.Button(self.actionframe, text='Edit', padx=5, pady=5, bg='#dcdcdc', command=lambda: cbf.edit_person(self))
+        self.button_edit = tk.Button(self.actionframe, text='Edit', padx=5, pady=5, bg='#dcdcdc',
+                                     command=lambda: cbf.edit_person(self))
         self.button_edit.grid(row=0, column=0, padx=5)
         self.button_edit.grid_remove()
 
-        self.button_remove = tk.Button(self.actionframe, text='Remove', padx=5, pady=5, bg='#dcdcdc', command=lambda: cbf.remove_person(self))
+        self.button_remove = tk.Button(self.actionframe, text='Remove', padx=5, pady=5, bg='#dcdcdc',
+                                       command=lambda: cbf.remove_person(self))
         self.button_remove.grid(row=0, column=1, padx=5)
         self.button_remove.grid_remove()
 
-        self.button_clear = tk.Button(self.actionframe, text='Clear', padx=5, pady=5, bg='#dcdcdc', command=lambda: cbf.clear_form_fields(self))
+        self.button_clear = tk.Button(self.actionframe, text='Clear', padx=5, pady=5, bg='#dcdcdc',
+                                      command=lambda: cbf.clear_form_fields(self))
         self.button_clear.grid(row=0, column=2, padx=5)
         self.button_clear.grid_remove()
 
