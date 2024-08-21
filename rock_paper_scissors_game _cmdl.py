@@ -8,7 +8,7 @@ computer_score = 0
 
 rules ='\nRules:\n1.First choose an option of your wish.\
 \n2.Second the computer will choose its option.\
-\n3.Based on both the choices the Winner will be selected and both\
+\n3.Based on both the choices the Winner will be selected and both\n\
 of your scores will be kept in track and will be displayed in the end of every game.'
 
 print('Welcome to the game => Rock Paper Scissors\n"Note : This is a 5 on 5 \
