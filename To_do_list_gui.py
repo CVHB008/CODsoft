@@ -8,19 +8,14 @@ from datetime import datetime as dt
 connection = sqlite3.connect('To_Do_List_db.db')
 
 
-"""sqcomm = '''CREATE TABLE Tasks (Task_Name VARCHAR,
-                    Task_Status VARCHAR,
-                    Date DATE,Time VARCHAR);'''
-cur.execute(sqcomm)"""
-
-class ToDoList :
-    def __init__(self,root):
+class ToDoList:
+    def __init__(self, root):
         self.root = root
         self.root.title('To Do List')
         self.root.geometry('515x582')
         self.root.resizable(False,False)
-        self.root.config(bg = None)
-
+        self.root.config(bg=None)
+        self.database()
         self.tasks_id_incomp = []
         self.tasks_id_pend = []
         self.tasks_id_comp = []
@@ -28,13 +23,22 @@ class ToDoList :
         self.setup_ui()
         self.load_tasks()
 
-        
+    def database(self):
+        conn = sqlite3.connect('To_Do_List_db.db')
+        query = '''CREATE TABLE IF NOT EXISTS Tasks (Task_Name VARCHAR,
+                    Task_Status VARCHAR,
+                    Date DATE,
+                    Time VARCHAR)'''
+        cur = conn.cursor()
+        cur.execute(query)
+        conn.commit()
+
+
     def setup_ui(self):
 
         self.label_topic = tk.Label(self.root,text = 'To Do List',width = 22,font = ('ariel',12,'bold'),padx = 5,pady = 5,relief = 'ridge')
         self.label_topic.place(x = 5,y = 5)
-        #self.enter_task.get()
-        
+
         #frame_createbt and its widgets
         self.frame_createbt = tk.LabelFrame(self.root,text = 'Create New task',font = ('ariel',12),padx = 5,pady = 3,relief = 'groove')
         self.frame_createbt.place(x = 5,y = 50)
@@ -90,7 +94,6 @@ class ToDoList :
 
         self.status_button = tk.Button(self.frame_updatebt,text = 'Update',padx = 10,pady = 5,command = self.update_status)
         self.status_button.grid(row =1,column = 0)
-        
 
         #frame_deletebt and its widgets
         self.frame_deletebt = tk.LabelFrame(self.root,text = 'Delete tasks',padx = 33,pady = 5,relief = 'groove',font = ('ariel',13))
@@ -101,27 +104,19 @@ class ToDoList :
         
         self.bt_delete = tk.Button(self.frame_deletebt,text = 'Delete task',command=self.delete_tasks,padx = 20,pady = 5)
         self.bt_delete.grid(row = 1, column = 0,pady = 5)
-
-        """# delete_all and button_exit
-        self.delallbt = tk.Button(self.root,text = 'Delete All',font = ('ariel',12),padx = 10,pady = 0,relief = 'groove',command = None)
-        self.delallbt.place(x = 5 ,y = 450)
-        
-        self.exitbt = tk.Button(self.root,text = 'Exit',font = ('ariel',12),padx = 20,pady = 0,relief = 'groove',command = self.root.destroy)
-        self.exitbt.place(x = 5 ,y = 500)"""
-    
         
     def create_task(self):
         taskname = self.enter_task.get()
         taskstatus = 'Incomplete'
-        if  taskname != "":
+        if taskname != "":
             now = dt.now()
             current_date = now.strftime("%Y-%b-%d")
             
-            connection = sqlite3.connect('To_Do_List_db.db')
-            cur = connection.cursor()
+            conn = sqlite3.connect('To_Do_List_db.db')
+            cur = conn.cursor()
             cur.execute('''INSERT INTO Tasks (Task_Name, Task_Status, Date) 
-                           VALUES (?, ?, ?)''',(taskname, taskstatus, current_date))
-            connection.commit()
+                           VALUES (?, ?, ?)''', (taskname, taskstatus, current_date))
+            conn.commit()
             self.enter_task.delete(0,'end')
         else:
             mb.showwarning("Warning", "You must enter a task.")
@@ -134,9 +129,8 @@ class ToDoList :
         task_oid = None
         new_status = None
         new_status = self.update_task.get()
-        
-        
-        if self.listbox_incomplete.get('anchor',):
+
+        if self.listbox_incomplete.get('anchor'):
             taskname = self.listbox_incomplete.get('anchor',)
             index = (int(taskname.split('.')[0])-1)
             task_oid = self.tasks_id_incomp[index][0]
@@ -152,11 +146,11 @@ class ToDoList :
             task_oid = self.tasks_id_comp[index][0]
             
         if new_status and task_oid:
-            connection = sqlite3.connect('To_Do_List_db.db')
-            cur = connection.cursor()
+            conn = sqlite3.connect('To_Do_List_db.db')
+            cur = conn.cursor()
             comm = '''UPDATE Tasks SET Task_Status = ?, Date = ? WHERE oid = ?'''
             cur.execute(comm,(new_status, current_date,task_oid))
-            connection.commit()
+            conn.commit()
             self.update_task.delete(0,'end')
         else:
             mb.showwarning("Warning", "You must enter task Status as well \nas select task from list box.")
@@ -200,8 +194,8 @@ class ToDoList :
         self.listbox_pending.delete(0,'end')
         self.listbox_completed.delete(0,'end')
         
-        connection = sqlite3.connect('To_Do_List_db.db')
-        cur = connection.cursor()
+        conn = sqlite3.connect('To_Do_List_db.db')
+        cur = conn.cursor()
         cur.execute('''SELECT oid,Task_name,Task_Status,Date FROM Tasks''')
         tasks = cur.fetchall()
         
@@ -214,14 +208,14 @@ class ToDoList :
         comp = 1
         
         for data in tasks:
-            oid,taskname,taskstatus,date = data
+            oid, taskname, taskstatus, date = data
             
             if taskstatus.lower() == 'incomplete':
                 self.listbox_incomplete.insert('end',f'{incomp}.{taskname}')
                 self.tasks_id_incomp.append(tuple([oid,taskname]))
                 incomp += 1
                 
-            elif taskstatus.lower() not in ['incomplete','complete','completed','finished','completed task','complete task']:
+            elif taskstatus.lower() not in ['incomplete', 'complete', 'completed', 'finished', 'completed task', 'complete task']:
                 self.listbox_pending.insert('end',f'{pend}.{taskname}')
                 self.tasks_id_pend.append(tuple([oid,taskname]))
                 pend += 1
@@ -232,8 +226,8 @@ class ToDoList :
                 comp += 1
                 
             else:
-                mb.showwarning('Warning','Some error occurred while updating \ntask please try again')
-        connection.commit()
+                mb.showwarning('Warning', 'Some error occurred while updating \ntask please try again')
+        conn.commit()
 
 
 root = tk.Tk()
